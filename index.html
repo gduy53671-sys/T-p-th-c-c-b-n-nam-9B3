@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+<title>💗 Các bạn nam 9B3 Gửi Cô và Các Bạn Nữ 20/10</title>
+<style>
+/* ============================================================
+   RESET & BASE
+============================================================ */
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{
+  height:100%;overflow:hidden;background:#05010f;color:#fff;
+  font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',Arial,sans-serif;
+  user-select:none;
+}
+body{
+  background:
+    radial-gradient(ellipse at 18% 8%, rgba(96,34,140,.55), transparent 62%),
+    radial-gradient(ellipse at 82% 85%, rgba(160,32,100,.45), transparent 62%),
+    radial-gradient(ellipse at 50% 50%, #0c0322, #04010c 72%);
+}
+#stars{position:fixed;inset:0;z-index:0;display:block}
+
+/* ============================================================
+   SCREENS
+============================================================ */
+.screen{
+  position:fixed;inset:0;z-index:3;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transform:scale(1.08);
+  transition:opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1);
+  padding:24px;text-align:center;
+}
+.screen.active{opacity:1;pointer-events:auto;transform:scale(1)}
+
+/* ============================================================
+   LOADER & GATE & FINGERPRINT & HEART
+============================================================ */
+.loader-ring{width:90px;height:90px;border-radius:50%;border:3px solid rgba(255,255,255,.12);border-top-color:#ff6f9c;border-right-color:#ffb3d1;animation:spinRing 1s linear infinite;box-shadow:0 0 40px rgba(255,111,156,.45);margin-bottom:26px;}
+@keyframes spinRing{to{transform:rotate(360deg)}}
+.loader-text{font-size:15px;letter-spacing:.6px;color:#ffd9e8;opacity:.9;margin-bottom:20px;animation:breathe 2s ease-in-out infinite;}
+@keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
+.loader-bar{width:200px;height:4px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden;}
+.loader-bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#ff6f9c,#ffd0e0,#ff6f9c);box-shadow:0 0 14px rgba(255,111,156,.9);animation:loadFill 2.4s cubic-bezier(.4,0,.2,1) forwards;}
+@keyframes loadFill{0%{width:0}45%{width:62%}100%{width:100%}}
+
+.gate-btn{width:168px;height:168px;border-radius:50%;display:grid;place-items:center;font-size:60px;cursor:pointer;background:radial-gradient(circle at 32% 28%,#ffc2dc,#ff5c8a 55%,#a8144a 100%);border:2px solid rgba(255,255,255,.55);box-shadow:0 0 46px rgba(255,80,140,.75),0 0 110px rgba(255,80,140,.38),inset 0 0 40px rgba(255,255,255,.28);animation:gatePulse 2.6s ease-in-out infinite;position:relative;}
+@keyframes gatePulse{0%,100%{transform:scale(1);box-shadow:0 0 46px rgba(255,80,140,.75),0 0 110px rgba(255,80,140,.38),inset 0 0 40px rgba(255,255,255,.28)}50%{transform:scale(1.07);box-shadow:0 0 70px rgba(255,80,140,.95),0 0 160px rgba(255,80,140,.5),inset 0 0 55px rgba(255,255,255,.4)}}
+.gate-btn::after{content:'';position:absolute;inset:-16px;border-radius:50%;border:1px solid rgba(255,180,210,.45);animation:ringOut 2.6s ease-out infinite;}
+@keyframes ringOut{0%{transform:scale(.85);opacity:.9}100%{transform:scale(1.45);opacity:0}}
+.gate-title{margin-top:38px;font-size:19px;font-weight:600;letter-spacing:.4px;color:#ffe6f0;text-shadow:0 0 26px rgba(255,120,170,.85);}
+.gate-sub{margin-top:10px;font-size:13px;color:#e6bcd6;opacity:.8}
+
+.fp-title{font-size:20px;font-weight:700;letter-spacing:.5px;color:#ffe6f0;text-shadow:0 0 26px rgba(255,120,170,.85)}
+.fp-sub{margin-top:10px;font-size:13px;color:#e6bcd6;opacity:.85;margin-bottom:38px}
+.fp-pad{position:relative;width:180px;height:180px;border-radius:50%;display:grid;place-items:center;cursor:pointer;touch-action:none;background:radial-gradient(circle at 50% 50%,rgba(255,110,160,.14),rgba(255,110,160,.03) 70%,transparent);transition:transform .3s ease;}
+.fp-pad:active{transform:scale(.97)}
+.fp-pad.holding{transform:scale(.96)}
+.fp-icon{width:96px;height:96px;color:#ffb3d1;opacity:.85;filter:drop-shadow(0 0 12px rgba(255,120,170,.8));transition:color .35s, opacity .35s}
+.fp-pad.holding .fp-icon{color:#fff;opacity:1}
+.fp-pad.success .fp-icon{color:#8affc1;filter:drop-shadow(0 0 18px rgba(120,255,190,.95))}
+.fp-ring{position:absolute;inset:0;width:180px;height:180px;transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:rgba(255,255,255,.13);stroke-width:5}
+.ring-fg{fill:none;stroke:url(#fpGrad);stroke-width:5;stroke-linecap:round;stroke-dasharray:439.8;stroke-dashoffset:439.8;transition:stroke-dashoffset 2.2s linear;filter:drop-shadow(0 0 8px rgba(255,120,170,.95));}
+.fp-pad.holding .ring-fg{stroke-dashoffset:0}
+.fp-pad.success .ring-fg{stroke-dashoffset:0;stroke:#8affc1;transition:stroke .3s}
+.fp-status{margin-top:34px;font-size:14px;color:#ffc9de;letter-spacing:.4px;min-height:20px;transition:color .3s}
+.fp-status.ok{color:#8affc1;text-shadow:0 0 18px rgba(120,255,190,.9)}
+
+#heartStage{padding:0}
+#heartCanvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;z-index:1}
+.heart-hint{position:absolute;bottom:70px;left:50%;transform:translateX(-50%);font-size:14px;color:#ffd6e6;letter-spacing:.4px;z-index:2;text-shadow:0 0 20px rgba(255,120,170,.9);animation:breathe 2s ease-in-out infinite;white-space:nowrap;transition:opacity .6s ease, transform .6s ease;}
+.heart-hint.hide{opacity:0;transform:translateX(-50%) translateY(14px);pointer-events:none}
+.btn-next{position:absolute;bottom:52px;left:50%;transform:translateX(-50%) scale(.85);z-index:3;padding:13px 30px;border-radius:99px;border:1px solid rgba(255,255,255,.5);background:linear-gradient(135deg,rgba(255,111,156,.95),rgba(196,40,110,.95));color:#fff;font-size:14.5px;font-weight:600;letter-spacing:.4px;cursor:pointer;font-family:inherit;opacity:0;pointer-events:none;box-shadow:0 0 30px rgba(255,90,150,.75),inset 0 0 18px rgba(255,255,255,.28);transition:opacity .7s ease, transform .7s cubic-bezier(.34,1.56,.64,1), box-shadow .3s;white-space:nowrap;}
+.btn-next.show{opacity:1;pointer-events:auto;transform:translateX(-50%) scale(1)}
+.btn-next:active{transform:translateX(-50%) scale(.94)}
+
+/* ============================================================
+   PORTAL SCREEN
+============================================================ */
+#portalScreen{padding:0;background:#000;z-index:4}
+#portalCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.portal-content{position:absolute;bottom:70px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:15px;}
+.portal-title{font-size:16px;color:#ffc2dc;letter-spacing:1px;text-shadow:0 0 15px rgba(255,110,160,.8);animation:breathe 2s infinite;}
+.portal-hold-btn{position:relative;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle at 30% 30%, #ff9ec4, #d6245e);display:grid;place-items:center;cursor:pointer;touch-action:none;box-shadow:0 0 30px rgba(255,80,140,.6), inset 0 0 20px rgba(255,255,255,.3);transition:transform 0.2s;}
+.portal-hold-btn:active{transform:scale(0.95)}
+.portal-hold-btn .icon-heart{font-size:36px;filter:drop-shadow(0 0 10px rgba(255,255,255,0.8));animation:pulseSeal 1.5s infinite;}
+.portal-hold-ring{position:absolute;inset:-5px;width:110px;height:110px;transform:rotate(-90deg);pointer-events:none;}
+.portal-hold-ring circle{fill:none;stroke-width:4;stroke-linecap:round;}
+.portal-ring-bg{stroke:rgba(255,255,255,.2)}
+.portal-ring-fg{stroke:#fff;stroke-dasharray:345.5;stroke-dashoffset:345.5;transition:stroke-dashoffset 2.5s linear;filter:drop-shadow(0 0 5px #fff);}
+.portal-hold-btn.holding .portal-ring-fg{stroke-dashoffset:0}
+.portal-loading{position:absolute;inset:0;display:grid;place-items:center;background:rgba(0,0,0,0.6);border-radius:50%;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.portal-hold-btn.holding .portal-loading{opacity:1}
+.portal-loading-spin{width:50px;height:50px;border-radius:50%;border:3px solid transparent;border-top-color:#ffb3d1;animation:spinRing 1s linear infinite;}
+@keyframes pulseSeal{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+
+/* ============================================================
+   FINAL SCREEN (THIỆP CHÍNH)
+============================================================ */
+#final{display:block;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:0;background:linear-gradient(135deg, #ffb6c1, #ff8da1, #ff6f9c);z-index: 5;}
+#final .final-inner{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 18px 80px;gap:15px;position:relative;z-index:2;}
+.fade-item{opacity:0;transform:translateY(34px) scale(.96)}
+.screen.active .fade-item{animation:fadeUp .95s cubic-bezier(.22,1,.36,1) forwards;animation-delay:var(--d,0s)}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* Khung thiệp chữ 20/10 phát sáng */
+.couple-wrapper {
+  width: 280px; height: 340px; position: relative;
+  perspective: 1000px; margin-bottom: 10px;
+}
+.couple-frame {
+  width: 100%; height: 100%;
+  border-radius: 30px; overflow: hidden;
+  border: 4px solid rgba(255,255,255,0.8);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 60px rgba(255, 255, 255, 0.8), inset 0 0 20px rgba(255,255,255,0.5);
+  transform: rotateY(-5deg) rotateX(5deg);
+  animation: floatCouple 6s ease-in-out infinite;
+  position: relative;
+  background: #2a0a2a;
+}
+@keyframes floatCouple {
+  0%, 100% { transform: rotateY(-5deg) rotateX(5deg) translateY(0); }
+  50% { transform: rotateY(5deg) rotateX(-5deg) translateY(-15px); }
+}
+.couple-frame svg {
+  width: 100%; height: 100%; display: block;
+}
+.heart-sticker {
+  position: absolute; bottom: -15px; right: -15px;
+  font-size: 40px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.4));
+  animation: pulseSeal 2s infinite; z-index: 10;
+}
+
+/* Nút Mở Thư */
+.open-letter-wrapper{margin: 15px 0; display: flex; justify-content: center; align-items: center;}
+.open-letter-btn{
+  padding: 12px 28px; border-radius: 99px; background: #fff; color: #d14a7a;
+  font-weight: 700; font-size: 15px; border: 2px solid #ff6f9c; cursor: pointer;
+  box-shadow: 0 0 20px rgba(255,255,255,0.8), 0 10px 20px rgba(255,100,150,0.4);
+  display: flex; align-items: center; gap: 8px; transition: all 0.3s; font-family: inherit;
+  animation: pulseBtn 2s infinite;
+}
+.open-letter-btn:active{transform: scale(0.92);}
+@keyframes pulseBtn { 0%,100%{ box-shadow: 0 0 20px rgba(255,255,255,0.8), 0 0 0 0 rgba(255,255,255,0.5);} 50%{ box-shadow: 0 0 25px rgba(255,255,255,1), 0 0 0 15px rgba(255,255,255,0);} }
+
+/* Bouquet */
+.bouquet-scene{width:300px;height:330px;margin:-10px auto 0;perspective:950px;position:relative;}
+.bouquet{position:absolute;left:50%;top:44%;width:0;height:0;transform-style:preserve-3d;animation:spinY 17s linear infinite;}
+@keyframes spinY{from{transform:rotateX(-14deg) rotateY(0deg)}to{transform:rotateX(-14deg) rotateY(360deg)}}
+.flower{position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d}
+.petal{position:absolute;left:-13px;top:-13px;width:26px;height:26px;border-radius:50% 50% 50% 50% / 58% 58% 42% 42%;box-shadow:inset 0 0 9px rgba(255,255,255,.75),0 0 10px rgba(255,150,200,.55);}
+.flower-core{position:absolute;left:-9px;top:-9px;width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff8cf,#ffd75e 55%,#f0a72b);box-shadow:0 0 14px rgba(255,215,94,.95),inset 0 0 6px rgba(255,255,255,.85);}
+.cone-panel{position:absolute;top:0;height:132px;clip-path:polygon(0 0,100% 0,72% 100%,28% 100%);transform-origin:50% 0;box-shadow:inset 0 0 22px rgba(255,255,255,.35);}
+
+/* Hoa rơi */
+.petal-rain{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+.falling-petal{position:absolute;top:-40px;width:14px;height:14px;border-radius:50% 0 50% 50%;background:linear-gradient(135deg,#fff,#ff5c8a);opacity:0;animation:fall linear infinite;box-shadow:0 0 10px rgba(255,120,170,.7);}
+@keyframes fall{0%{transform:translateY(-40px) rotate(0deg) scale(var(--s,1));opacity:0}8%{opacity:.92}90%{opacity:.5}100%{transform:translateY(112vh) rotate(760deg) scale(var(--s,1));opacity:0}}
+
+/* ============================================================
+   LETTER SCREEN (NỀN CUTE)
+============================================================ */
+#letterScreen {
+  background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+  z-index: 10;
+  padding: 20px;
+  overflow: hidden;
+}
+#letterScreen::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: 
+    radial-gradient(circle, rgba(255,255,255,0.8) 2px, transparent 2px),
+    radial-gradient(circle, rgba(255,255,255,0.5) 1px, transparent 1px);
+  background-size: 50px 50px, 30px 30px;
+  background-position: 0 0, 15px 15px;
+  animation: starsMove 10s linear infinite;
+  opacity: 0.6;
+}
+@keyframes starsMove {
+  from { background-position: 0 0, 15px 15px; }
+  to { background-position: 50px 50px, 65px 65px; }
+}
+
+.letter-paper {
+  width: 100%; max-width: 340px; 
+  max-height: 80vh; /* Giới hạn chiều cao để cuộn */
+  display: flex;
+  flex-direction: column;
+  background: #fffdfa; 
+  border-radius: 20px;
+  padding: 30px 25px; 
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15), 0 0 40px rgba(255, 255, 255, 0.8);
+  text-align: left; position: relative; z-index: 2;
+  border: 2px solid #fff;
+  transform: translateY(20px); opacity: 0;
+  animation: paperUp 1s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+@keyframes paperUp { to { transform: translateY(0); opacity: 1; } }
+
+.letter-paper::before {
+  content: '🎀';
+  position: absolute; top: -25px; left: 50%; transform: translateX(-50%);
+  font-size: 45px; z-index: 3; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2));
+}
+
+.letter-paper h3 {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 16px; color: #d14a7a; margin-bottom: 15px;
+  border-bottom: 1px dashed #ffcce0; padding-bottom: 10px;
+  text-transform: uppercase;
+  font-style: italic;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.letter-paper p {
+  font-size: 13.5px; color: #4a3b42; line-height: 1.7;
+  flex-grow: 1;
+  overflow-y: auto; /* Cho phép cuộn dọc */
+  padding-right: 8px;
+  white-space: pre-wrap; word-wrap: break-word;
+  text-transform: uppercase; /* Chữ hoa */
+  font-style: italic;        /* Chữ nghiêng */
+  font-weight: 500;
+}
+
+/* Thanh cuộn dễ thương */
+.letter-paper p::-webkit-scrollbar { width: 6px; }
+.letter-paper p::-webkit-scrollbar-track { background: #ffe4ef; border-radius: 10px; }
+.letter-paper p::-webkit-scrollbar-thumb { background: #ff6f9c; border-radius: 10px; }
+
+.letter-paper .sign {
+  text-align: right; font-family: 'Segoe UI', Arial, sans-serif;
+  color: #d14a7a; margin-top: 15px; font-size: 14px;
+  opacity: 0; transition: opacity 0.5s ease 1s;
+  text-transform: uppercase;
+  font-style: italic;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+.letter-paper .sign.show { opacity: 1; }
+.cursor {
+  display: inline-block; width: 2px; height: 14px;
+  background: #d14a7a; animation: blink 1s step-end infinite;
+  vertical-align: middle;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+.close-letter-btn {
+  position: absolute; top: 20px; right: 20px; z-index: 20;
+  background: rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.6);
+  color: #fff; padding: 8px 16px; border-radius: 99px; font-size: 13px;
+  font-weight: bold; cursor: pointer; backdrop-filter: blur(5px); transition: all 0.3s;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.close-letter-btn:active { background: rgba(255,255,255,0.6); color: #d14a7a; }
+</style>
+</head>
+<body>
+
+<!-- NỀN SAO -->
+<canvas id="stars"></canvas>
+
+<!-- 1. LOADING -->
+<div id="loader" class="screen active">
+  <div class="loader-ring"></div>
+  <div class="loader-text">Các bạn nam 9B3 đang chuẩn bị điều bất ngờ...</div>
+  <div class="loader-bar"><i></i></div>
+</div>
+
+<!-- 2. CỔNG VÀO -->
+<div id="gate" class="screen">
+  <div class="gate-btn">💌</div>
+  <div class="gate-title">Món quà từ các bạn nam 9B3</div>
+  <div class="gate-sub">Dành tặng Cô Đào Phương Định và các bạn nữ...</div>
+</div>
+
+<!-- 3. XÁC NHẬN VÂN TAY -->
+<div id="finger" class="screen">
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <linearGradient id="fpGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ff6f9c"/><stop offset="50%" stop-color="#ffd0e0"/><stop offset="100%" stop-color="#ff6f9c"/>
+      </linearGradient>
+    </defs>
+  </svg>
+  <div class="fp-title">Xác nhận vân tay</div>
+  <div class="fp-sub">Đặt ngón tay vào để nhận quà từ 9B3 💗</div>
+  <div class="fp-pad" id="fpPad">
+    <svg class="fp-ring" viewBox="0 0 180 180">
+      <circle class="ring-bg" cx="90" cy="90" r="70"/><circle class="ring-fg" cx="90" cy="90" r="70"/>
+    </svg>
+    <svg class="fp-icon" viewBox="0 0 120 120">
+      <g fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round">
+        <path d="M60 98c-20 0-36-16-36-36s16-36 36-36 36 16 36 36"/>
+        <path d="M60 85c-13 0-23-10-23-23s10-23 23-23 23 10 23 23"/>
+        <path d="M60 72c-6 0-10-4-10-10s4-10 10-10 10 4 10 10"/>
+        <path d="M24 80c-3-6-5-13-5-20 0-23 18-42 41-42s41 19 41 42c0 7-2 14-5 20"/>
+        <path d="M60 108c-11 0-21-4-29-11"/><path d="M60 108c11 0 21-4 29-11"/>
+      </g>
+    </svg>
+  </div>
+  <div class="fp-status" id="fpStatus">Đang chờ ngón tay...</div>
+</div>
+
+<!-- 4. TRÁI TIM 3D -->
+<div id="heartStage" class="screen">
+  <canvas id="heartCanvas"></canvas>
+  <div class="heart-hint" id="heartHint">Chạm vào trái tim 9B3 để bước vào 💗</div>
+  <button class="btn-next" id="nextBtn">Mở thiệp chúc mừng →</button>
+</div>
+
+<!-- 5. MÀN HÌNH PORTAL -->
+<div id="portalScreen" class="screen">
+  <canvas id="portalCanvas"></canvas>
+  <div class="portal-content">
+    <div class="portal-title">Giữ để mở khóa món quà 💖</div>
+    <div class="portal-hold-btn" id="portalBtn">
+      <div class="icon-heart">💗</div>
+      <div class="portal-loading"><div class="portal-loading-spin"></div></div>
+      <svg class="portal-hold-ring" viewBox="0 0 110 110">
+        <circle class="portal-ring-bg" cx="55" cy="55" r="55"/><circle class="portal-ring-fg" cx="55" cy="55" r="55"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<!-- 6. THIỆP CHÍNH (FINAL) -->
+<div id="final" class="screen">
+  <div class="petal-rain" id="petalRain"></div>
+  <div class="final-inner">
+    
+    <!-- KHUNG THIỆP CHỮ 20/10 PHÁT SÁNG -->
+    <div class="fade-item couple-wrapper" style="--d:0s">
+      <div class="couple-frame">
+        
+        <svg viewBox="0 0 300 340" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#2a0a2a"/>
+              <stop offset="50%" stop-color="#4d1a4d"/>
+              <stop offset="100%" stop-color="#1a001a"/>
+            </linearGradient>
+            <linearGradient id="textGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fff"/>
+              <stop offset="50%" stop-color="#ffb6c1"/>
+              <stop offset="100%" stop-color="#ff69b4"/>
+            </linearGradient>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="6" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+            <filter id="softGlow">
+              <feGaussianBlur stdDeviation="3" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+
+          <rect width="300" height="340" fill="url(#bgGrad)"/>
+          
+          <circle cx="70" cy="80" r="40" fill="#ff69b4" opacity="0.15" filter="url(#glow)"/>
+          <circle cx="230" cy="260" r="60" fill="#ffb6c1" opacity="0.15" filter="url(#glow)"/>
+          <circle cx="150" cy="150" r="100" fill="#ff1493" opacity="0.1" filter="url(#glow)"/>
+          
+          <g fill="#fff" opacity="0.8">
+            <path d="M50 50 L52 56 L58 58 L52 60 L50 66 L48 60 L42 58 L48 56 Z"/>
+            <path d="M250 100 L251.5 104 L255 105.5 L251.5 107 L250 111 L248.5 107 L245 105.5 L248.5 104 Z"/>
+            <path d="M80 280 L82 285 L87 287 L82 289 L80 294 L78 289 L73 287 L78 285 Z"/>
+            <path d="M220 60 L221 63 L224 64 L221 65 L220 68 L219 65 L216 64 L219 63 Z"/>
+          </g>
+
+          <g fill="#ff69b4" opacity="0.6" filter="url(#softGlow)">
+            <path d="M70 150 Q75 140 80 150 Q85 140 90 150 Q90 160 80 170 Q70 160 70 150 Z" />
+            <path d="M210 190 Q215 180 220 190 Q225 180 230 190 Q230 200 220 210 Q210 200 210 190 Z" />
+            <path d="M100 250 Q103 244 106 250 Q109 244 112 250 Q112 256 106 260 Q100 256 100 250 Z" />
+          </g>
+
+          <!-- CHỮ TRÊN THIỆP -->
+          <text x="150" y="110" font-family="Segoe UI, Arial, sans-serif" font-weight="bold" font-size="18" fill="#fff" text-anchor="middle" filter="url(#glow)">CÁC BẠN NAM 9B3 GỬI</text>
+          
+          <text x="150" y="195" font-family="Segoe UI, Arial, sans-serif" font-weight="900" font-size="76" fill="url(#textGrad)" text-anchor="middle" filter="url(#glow)" letter-spacing="2">20/10</text>
+          
+          <text x="150" y="250" font-family="Segoe UI, Arial, sans-serif" font-weight="bold" font-size="16" fill="#ffb6c1" text-anchor="middle" filter="url(#glow)">CÔ VÀ CÁC BẠN NỮ XINH ĐẸP</text>
+          
+          <path d="M100 270 Q150 285 200 270" fill="none" stroke="#ff69b4" stroke-width="3" stroke-linecap="round" filter="url(#glow)"/>
+          <circle cx="150" cy="280" r="4" fill="#fff" filter="url(#glow)"/>
+
+        </svg>
+
+      </div>
+      <div class="heart-sticker">💖</div>
+    </div>
+
+    <!-- NÚT MỞ THƯ -->
+    <div class="fade-item open-letter-wrapper" style="--d:.2s">
+      <button class="open-letter-btn" id="openLetterBtn">
+        <span>💌 Đọc thư từ Các bạn nam 9B3</span>
+      </button>
+    </div>
+
+    <!-- PHẦN BÓ HOA XOAY -->
+    <div class="fade-item" style="--d:.4s">
+      <div class="bouquet-scene">
+        <div class="bouquet" id="bouquet"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 7. MÀN HÌNH LÁ THƯ -->
+<div id="letterScreen" class="screen">
+  <button class="close-letter-btn" id="closeLetterBtn">✕ Đóng</button>
+  
+  <div class="letter-paper">
+    <h3>💌 THƯ CHÚC MỪNG NGÀY PHỤ NỮ VIỆT NAM 20/10💐</h3>
+    <p id="typewriterText"></p>
+    <div class="sign" id="letterSign">🌹 TẬP THỂ CÁC BẠN NAM LỚP 9B3 🌹</div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   0. TIỆN ÍCH & QUẢN LÝ MÀN HÌNH
+============================================================ */
+const clamp01 = v => v < 0 ? 0 : (v > 1 ? 1 : v);
+const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
+const easeInOutCubic = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2;
+const DPR = Math.min(window.devicePixelRatio || 1, 2);
+const $ = id => document.getElementById(id);
+
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  $(id).classList.add('active');
+}
+setTimeout(() => showScreen('gate'), 2700);
+$('gate').addEventListener('click', () => showScreen('finger'));
+
+/* ============================================================
+   1. NỀN SAO LẤP LÁNH
+============================================================ */
+(function starfield(){
+  const cv = $('stars');
+  const ctx = cv.getContext('2d');
+  let W = 0, H = 0, stars = [];
+  function setup(){
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = W * DPR; cv.height = H * DPR;
+    cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    const count = Math.round((W * H) / 6500);
+    stars = [];
+    for (let i = 0; i < count; i++){
+      stars.push({
+        x: Math.random() * W, y: Math.random() * H,
+        r: Math.random() * 1.5 + 0.25, ph: Math.random() * Math.PI * 2,
+        sp: 0.4 + Math.random() * 1.7,
+        hue: Math.random() < .22 ? '#ffd7ec' : (Math.random() < .16 ? '#cdd9ff' : '#ffffff')
+      });
+    }
+  }
+  function draw(t){
+    ctx.clearRect(0, 0, W, H);
+    for (let i = 0; i < stars.length; i++){
+      const s = stars[i];
+      const a = 0.28 + 0.72 * (0.5 + 0.5 * Math.sin(t * 0.001 * s.sp + s.ph));
+      ctx.globalAlpha = a; ctx.fillStyle = s.hue;
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.2832); ctx.fill();
+      if (s.r > 1.25){
+        ctx.globalAlpha = a * 0.28;
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.r * 3.6, 0, 6.2832); ctx.fill();
+      }
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize', setup);
+  setup(); requestAnimationFrame(draw);
+})();
+
+/* ============================================================
+   2. XÁC NHẬN VÂN TAY
+============================================================ */
+(function fingerprint(){
+  const pad = $('fpPad'); const status = $('fpStatus');
+  let timer = null; let done = false;
+  function start(e){
+    if (done) return; e.preventDefault();
+    pad.classList.add('holding'); status.textContent = 'Đang xác nhận...';
+    timer = setTimeout(finish, 2250);
+  }
+  function cancel(){
+    if (done) return;
+    if (timer){ clearTimeout(timer); timer = null; }
+    pad.classList.remove('holding'); status.textContent = 'Đang chờ ngón tay...';
+  }
+  function finish(){
+    done = true; timer = null;
+    pad.classList.remove('holding'); pad.classList.add('success');
+    status.textContent = 'Xác nhận thành công ✓'; status.classList.add('ok');
+    setTimeout(() => { showScreen('heartStage'); startHeart(); }, 900);
+  }
+  pad.addEventListener('pointerdown', start); pad.addEventListener('pointerup', cancel);
+  pad.addEventListener('pointercancel', cancel); pad.addEventListener('pointerleave', cancel);
+})();
+
+/* ============================================================
+   3. TRÁI TIM 3D
+============================================================ */
+const heartCanvas = $('heartCanvas'); const hctx = heartCanvas.getContext('2d');
+let HW = 0, HH = 0;
+const PALETTE = [[255,255,255],[255,209,232],[255,143,184],[255,92,138],[255,61,110],[214,130,255]];
+const spriteCache = {};
+function getSprite(rgb){
+  const key = rgb.join(',');
+  if (spriteCache[key]) return spriteCache[key];
+  const S = 64; const c = document.createElement('canvas'); c.width = c.height = S;
+  const g = c.getContext('2d'); const grd = g.createRadialGradient(S/2, S/2, 0, S/2, S/2, S/2);
+  grd.addColorStop(0, 'rgba(255,255,255,1)'); grd.addColorStop(0.16, `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.92)`);
+  grd.addColorStop(0.45, `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.22)`); grd.addColorStop(1, `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0)`);
+  g.fillStyle = grd; g.fillRect(0, 0, S, S); spriteCache[key] = c; return c;
+}
+function heartF(x, y, z){ const a = x*x + 2.25*z*z + y*y - 1; return a*a*a - x*x*y*y*y - 0.1125*z*z*y*y*y; }
+function randDir(){ let x, y, z, l; do { x = Math.random()*2-1; y = Math.random()*2-1; z = Math.random()*2-1; l = x*x + y*y + z*z; } while (l > 1 || l < 0.0001); l = Math.sqrt(l); return [x/l, y/l, z/l]; }
+function heartPoint(){
+  const [dx, dy, dz] = randDir(); if (heartF(dx*2, dy*2, dz*2) < 0) return null;
+  let lo = 0, hi = 2;
+  for (let i = 0; i < 26; i++){ const mid = (lo + hi) * 0.5; if (heartF(dx*mid, dy*mid, dz*mid) < 0) lo = mid; else hi = mid; }
+  const r = (lo + hi) * 0.5; return [dx*r, dy*r - 0.06, dz*r];
+}
+const COUNT = 1150, HEART_SCALE = 232, INNER_R = 330;
+let particles = [], state = 'wait', formT = 0, enterT = 0, rotY = 0, rotX = 0, spin = 0, camZ = 950, focal = 600, mix = 0;
+let lastTime = performance.now();
+function sizeHeart(){
+  HW = window.innerWidth; HH = window.innerHeight;
+  heartCanvas.width = HW * DPR; heartCanvas.height = HH * DPR;
+  heartCanvas.style.width = HW + 'px'; heartCanvas.style.height = HH + 'px';
+  hctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+}
+window.addEventListener('resize', () => { sizeHeart(); if (state === 'wait' || state === 'forming' || state === 'idle') computeLens(); });
+function computeLens(){ const m = Math.min(HW, HH); if (state === 'inside'){ focal = m * 0.82; camZ = 0.6; } else { focal = m * 1.42; camZ = 950; } }
+function initParticles(){
+  particles = []; let guard = 0;
+  while (particles.length < COUNT && guard < COUNT * 8){
+    guard++; const hp = heartPoint(); if (!hp) continue;
+    const [sx, sy, sz] = randDir(); const sr = 520 + Math.random() * 420;
+    const [ix, iy, iz] = randDir(); const ir = INNER_R * (0.82 + Math.random() * 0.36);
+    particles.push({
+      hx: hp[0], hy: hp[1], hz: hp[2], sx: sx*sr, sy: sy*sr, sz: sz*sr, ix: ix*ir, iy: iy*ir, iz: iz*ir,
+      delay: Math.random() * 0.35, size: 0.9 + Math.random() * 1.7, rgb: PALETTE[(Math.random() * PALETTE.length) | 0], tw: Math.random() * Math.PI * 2
+    });
+  }
+}
+function startHeart(){
+  sizeHeart(); initParticles(); computeLens();
+  state = 'forming'; formT = 0; rotY = 0; rotX = 0; spin = 0; mix = 0;
+  lastTime = performance.now(); requestAnimationFrame(heartLoop);
+}
+function heartLoop(now){
+  const dt = Math.min((now - lastTime) / 1000, 0.05); lastTime = now;
+  if (state === 'forming'){
+    formT += dt / 3.1; if (formT >= 1){ formT = 1; state = 'idle'; }
+    spin = -(1 - easeOutCubic(formT)) * Math.PI * 2;
+  } else if (state === 'idle'){
+    rotY += dt * 0.42; rotX += (Math.sin(now / 3200) * 0.09 - rotX) * 0.05;
+  } else if (state === 'entering'){
+    enterT += dt / 1.7; if (enterT >= 1) enterT = 1;
+    const e = easeInOutCubic(enterT); mix = e;
+    camZ = 950 * (1 - e) + 0.6 * e; const m = Math.min(HW, HH); focal = m * 1.42 * (1 - e) + m * 0.82 * e;
+    rotY += dt * 0.25;
+    if (enterT >= 1){
+      state = 'inside'; mix = 1; camZ = 0.6; focal = Math.min(HW, HH) * 0.82; $('nextBtn').classList.add('show');
+    }
+  } else if (state === 'inside'){ rotY += dt * 0.09; }
+
+  hctx.clearRect(0, 0, HW, HH);
+  const cx = HW / 2, cy = HH / 2, rY = rotY + spin, cosY = Math.cos(rY), sinY = Math.sin(rY);
+  const cosX = Math.cos(rotX), sinX = Math.sin(rotX), beat = (state === 'idle') ? 1 + 0.028 * Math.sin(now / 430) : 1;
+  const hs = HEART_SCALE * beat; hctx.globalCompositeOperation = 'lighter';
+
+  for (let i = 0; i < particles.length; i++){
+    const p = particles[i]; const e = easeOutCubic(clamp01((formT - p.delay) / 0.65));
+    const hx = p.hx * hs, hy = p.hy * hs, hz = p.hz * hs;
+    let bx = p.sx + (hx - p.sx) * e; let by = p.sy + (hy - p.sy) * e; let bz = p.sz + (hz - p.sz) * e;
+    if (mix > 0){ bx += (p.ix - bx) * mix; by += (p.iy - by) * mix; bz += (p.iz - bz) * mix; }
+    const x1 = bx * cosY - bz * sinY, z1 = bx * sinY + bz * cosY;
+    const y1 = by * cosX - z1 * sinX, z2 = by * sinX + z1 * cosX;
+    const depth = z2 + camZ; if (depth < 12) continue;
+    const f = focal / depth, sx = cx + x1 * f, sy = cy - y1 * f;
+    if (sx < -60 || sx > HW + 60 || sy < -60 || sy > HH + 60) continue;
+    let d = p.size * f * 5.2; if (d < 1.1) d = 1.1; if (d > 42) d = 42;
+    let a = 0.82 * (0.62 + 0.38 * Math.sin(now / 620 + p.tw)) * clamp01((depth - 12) / 70);
+    if (a <= 0.02) continue;
+    hctx.globalAlpha = a; hctx.drawImage(getSprite(p.rgb), sx - d, sy - d, d * 2, d * 2);
+  }
+  hctx.globalAlpha = 1; hctx.globalCompositeOperation = 'source-over'; requestAnimationFrame(heartLoop);
+}
+let isDown = false, lastX = 0, lastY = 0, moved = 0;
+heartCanvas.addEventListener('pointerdown', e => {
+  if (state === 'forming' || state === 'entering' || state === 'wait') return;
+  isDown = true; moved = 0; lastX = e.clientX; lastY = e.clientY; heartCanvas.setPointerCapture(e.pointerId);
+});
+heartCanvas.addEventListener('pointermove', e => {
+  if (!isDown) return; const dx = e.clientX - lastX, dy = e.clientY - lastY; lastX = e.clientX; lastY = e.clientY;
+  moved += Math.abs(dx) + Math.abs(dy); rotY += dx * 0.0085; rotX += dy * 0.0085; rotX = Math.max(-1.25, Math.min(1.25, rotX));
+});
+function endPointer(e){
+  if (!isDown) return; isDown = false;
+  if (moved < 14 && state === 'idle'){ state = 'entering'; enterT = 0; $('heartHint').classList.add('hide'); }
+}
+heartCanvas.addEventListener('pointerup', endPointer); heartCanvas.addEventListener('pointercancel', endPointer);
+
+/* ============================================================
+   4. PORTAL SCREEN
+============================================================ */
+$('nextBtn').addEventListener('click', () => { showScreen('portalScreen'); startPortal(); });
+
+const portalCanvas = $('portalCanvas'); const pctx = portalCanvas.getContext('2d');
+let PW = 0, PH = 0, portalParticles = [], portalRot = 0, portalActive = false;
+function sizePortal(){
+  PW = window.innerWidth; PH = window.innerHeight;
+  portalCanvas.width = PW * DPR; portalCanvas.height = PH * DPR;
+  portalCanvas.style.width = PW + 'px'; portalCanvas.style.height = PH + 'px'; pctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+}
+function initPortalParticles(){
+  portalParticles = []; const pinkPalette = [[255,182,213],[255,105,180],[255,20,147],[255,240,245]];
+  const clusterCenters = [{ x: -180, y: -120, z: 0, s: 0.6 }, { x: 180, y: 120, z: -100, s: 0.5 }, { x: 0, y: 0, z: 150, s: 1.2 }];
+  clusterCenters.forEach((center, cIdx) => {
+    let count = cIdx === 2 ? 400 : 200; let guard = 0;
+    while (count > 0 && guard < 5000){
+      guard++; const hp = heartPoint(); if (!hp) continue;
+      portalParticles.push({
+        cx: center.x, cy: center.y, cz: center.z, x: hp[0]*150*center.s, y: hp[1]*150*center.s, z: hp[2]*150*center.s,
+        size: 1.2 + Math.random() * 1.5, rgb: pinkPalette[(Math.random() * pinkPalette.length) | 0], tw: Math.random() * Math.PI * 2
+      }); count--;
+    }
+  });
+}
+function startPortal(){ sizePortal(); initPortalParticles(); portalActive = true; portalRot = 0; requestAnimationFrame(portalLoop); }
+function portalLoop(t){
+  if (!portalActive) return; pctx.clearRect(0, 0, PW, PH);
+  portalRot += 0.015; const cx = PW / 2, cy = PH / 2 - 50;
+  const cosY = Math.cos(portalRot), sinY = Math.sin(portalRot), cosX = Math.cos(portalRot * 0.5), sinX = Math.sin(portalRot * 0.5);
+  pctx.globalCompositeOperation = 'lighter';
+  for (let i = 0; i < portalParticles.length; i++){
+    const p = portalParticles[i];
+    let x1 = p.x * cosY - p.z * sinY; let z1 = p.x * sinY + p.z * cosY;
+    let y1 = p.y * cosX - z1 * sinX; let z2 = p.y * sinX + z1 * cosX;
+    let finalX = p.cx + x1, finalY = p.cy + y1, finalZ = p.cz + z2;
+    const depth = finalZ + 800; if (depth < 10) continue;
+    const f = 600 / depth, sx = cx + finalX * f, sy = cy + finalY * f;
+    let d = p.size * f * 2.5; if (d < 1) d = 1;
+    let a = 0.85 * (0.5 + 0.5 * Math.sin(t / 400 + p.tw)); a *= clamp01((depth - 10) / 100);
+    pctx.globalAlpha = a; pctx.drawImage(getSprite(p.rgb), sx - d, sy - d, d * 2, d * 2);
+  }
+  pctx.globalAlpha = 1; pctx.globalCompositeOperation = 'source-over'; requestAnimationFrame(portalLoop);
+}
+(function portalHoldLogic(){
+  const btn = $('portalBtn'); let timer = null; let isFinished = false;
+  function startHold(e){
+    if (isFinished) return; e.preventDefault(); btn.classList.add('holding');
+    timer = setTimeout(() => {
+      isFinished = true; portalActive = false; btn.classList.remove('holding');
+      showScreen('final');
+    }, 2500);
+  }
+  function cancelHold(){ if (isFinished) return; if (timer) { clearTimeout(timer); timer = null; } btn.classList.remove('holding'); }
+  btn.addEventListener('pointerdown', startHold); btn.addEventListener('pointerup', cancelHold);
+  btn.addEventListener('pointercancel', cancelHold); btn.addEventListener('pointerleave', cancelHold);
+})();
+
+/* ============================================================
+   5. BÓ HOA XOAY 3D
+============================================================ */
+(function buildBouquet(){
+  const box = $('bouquet'); if (!box) return;
+  const COLORS = [['#ff9ec4','#ffe0ee'],['#ffffff','#ffeaf3'],['#c9a7ff','#ece0ff'],['#ffb08a','#ffe4d6'],['#ff6f9c','#ffc9dd'],['#ffe08a','#fff6d1']];
+  const spots = []; const outerN = 9, innerN = 5;
+  for (let i = 0; i < outerN; i++) spots.push({ a: (360/outerN)*i, r: 88, y: 24, tilt: -30, sc: 1 });
+  for (let i = 0; i < innerN; i++) spots.push({ a: (360/innerN)*i + 36, r: 44, y: -16, tilt: -48, sc: .88 });
+  spots.forEach((s, idx) => {
+    const fl = document.createElement('div'); fl.className = 'flower';
+    fl.style.transform = `rotateY(${s.a}deg) translateZ(${s.r}px) translateY(${s.y}px) rotateX(${s.tilt}deg) scale(${s.sc})`;
+    const col = COLORS[idx % COLORS.length]; const petalCount = 5 + (idx % 2);
+    for (let k = 0; k < petalCount; k++){
+      const pt = document.createElement('div'); pt.className = 'petal';
+      pt.style.transform = `rotate(${(360/petalCount)*k}deg) translateY(-15px)`;
+      pt.style.background = `radial-gradient(circle at 50% 78%, ${col[1]}, ${col[0]} 72%, ${col[0]})`;
+      fl.appendChild(pt);
+    }
+    const core = document.createElement('div'); core.className = 'flower-core'; fl.appendChild(core); box.appendChild(fl);
+  });
+  const PANEL = 12, R = 74; const w = (2 * Math.PI * R) / PANEL + 3;
+  for (let i = 0; i < PANEL; i++){
+    const p = document.createElement('div'); p.className = 'cone-panel';
+    p.style.width = w + 'px'; p.style.left = (-w/2) + 'px';
+    p.style.transform = `rotateY(${(360/PANEL)*i}deg) translateZ(${R}px) translateY(16px)`;
+    p.style.background = `linear-gradient(180deg,#ffdcea 0%,#f6a4c4 52%,#c96a92 100%)`;
+    box.appendChild(p);
+  }
+})();
+
+/* ============================================================
+   6. LÁ THƯ VÀ HIỆU ỨNG GÕ CHỮ
+============================================================ */
+const openLetterBtn = $('openLetterBtn');
+const closeLetterBtn = $('closeLetterBtn');
+const typeTextEl = $('typewriterText');
+const letterSign = $('letterSign');
+let isTyping = false;
+
+// NỘI DUNG THƯ MỚI
+const letterMessage = 
+"Gửi cô Đào Phương Định kính mến và toàn thể các bạn nữ lớp 9B3 thân yêu! 💗\n\n" +
+"Nhân ngày Phụ nữ Việt Nam 20/10, tập thể các bạn nam lớp 9B3 xin gửi đến cô và tất cả các bạn nữ những lời chúc tốt đẹp nhất!\n\n" +
+"🌷 Đối với cô Đào Phương Định: Chúng em kính chúc cô luôn mạnh khỏe, xinh đẹp, hạnh phúc và tràn đầy nhiệt huyết với nghề. Cảm ơn cô đã luôn quan tâm, dạy dỗ và đồng hành cùng tập thể 9B3. Mong cô luôn vui vẻ, gặp nhiều may mắn và có thật nhiều niềm vui trong cuộc sống.\n\n" +
+"🌸 Đối với các bạn nữ 9B3: Chúc các bạn luôn xinh xắn, vui vẻ, học giỏi, gặp nhiều may mắn và đạt được những điều mình mong muốn. Cảm ơn các bạn đã góp phần tạo nên một tập thể 9B3 đoàn kết, vui vẻ và đầy ắp những kỉ niệm đẹp. Mong rằng chúng ta sẽ luôn bên nhau, cùng nhau cố gắng và lưu giữ thật nhiều khoảnh khắc đáng nhớ của tuổi học trò.\n\n" +
+"Cuối cùng, chúc cô và các bạn nữ có một ngày 20/10 thật ý nghĩa, ngập tràn hoa, quà, niềm vui và yêu thương. Mong rằng không chỉ riêng ngày 20/10 mà mỗi ngày trôi qua, cô và các bạn đều luôn hạnh phúc, rạng rỡ với nụ cười trên môi! ❤️\n\n" +
+"Thân gửi bằng tất cả sự kính trọng và yêu quý!";
+
+openLetterBtn.addEventListener('click', () => {
+  showScreen('letterScreen');
+  
+  if (!isTyping) {
+    setTimeout(() => {
+      isTyping = true;
+      typeTextEl.innerHTML = '';
+      letterSign.classList.remove('show');
+      
+      const cursor = document.createElement('span');
+      cursor.className = 'cursor';
+      
+      const chars = Array.from(letterMessage);
+      let i = 0;
+      
+      function type() {
+        if (i < chars.length) {
+          let char = chars[i];
+          if (char === '\n') {
+            typeTextEl.innerHTML += '<br>';
+          } else {
+            typeTextEl.innerHTML = typeTextEl.innerHTML.replace('<span class="cursor"></span>', '') 
+                                 + char + '<span class="cursor"></span>';
+          }
+          i++;
+          
+          // Tốc độ gõ nhanh
+          let speed = 15; 
+          if (char === '.' || char === ',' || char === '!' || char === '?') speed = 50; 
+          
+          // Tự động cuộn xuống khi đang gõ chữ
+          typeTextEl.scrollTop = typeTextEl.scrollHeight;
+
+          setTimeout(type, speed);
+        } else {
+          setTimeout(() => {
+            const c = typeTextEl.querySelector('.cursor');
+            if(c) c.style.display = 'none';
+            letterSign.classList.add('show');
+            // Cuộn xuống để thấy chữ ký
+            typeTextEl.scrollTop = typeTextEl.scrollHeight;
+          }, 500);
+        }
+      }
+      typeTextEl.appendChild(cursor);
+      type();
+    }, 800);
+  }
+});
+
+closeLetterBtn.addEventListener('click', () => {
+  showScreen('final');
+});
+
+/* ============================================================
+   7. CÁNH HOA RƠI
+============================================================ */
+(function petals(){
+  const wrap = $('petalRain'); if (!wrap) return;
+  for (let i = 0; i < 20; i++){
+    const el = document.createElement('div'); el.className = 'falling-petal';
+    el.style.left = (Math.random() * 100) + '%';
+    el.style.animationDuration = (8 + Math.random() * 9) + 's';
+    el.style.animationDelay = (-Math.random() * 18) + 's';
+    el.style.setProperty('--s', (0.45 + Math.random() * 1.0).toFixed(2));
+    const hue = Math.random();
+    el.style.background = hue < .33 ? 'linear-gradient(135deg,#ffd7e8,#ff7aa8)' : hue < .66 ? 'linear-gradient(135deg,#ffffff,#ffc2dc)' : 'linear-gradient(135deg,#e0ccff,#b58cff)';
+    wrap.appendChild(el);
+  }
+})();
+</script>
+</body>
+</html>
